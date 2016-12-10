@@ -1,125 +1,184 @@
-select concat('Teaching people to code for ' , (UNIX_TIMESTAMP() - UNIX_TIMESTAMP('2014-02-04')), ' seconds');
-select concat('Teaching people to code for ' , (UNIX_TIMESTAMP() - UNIX_TIMESTAMP('2014-02-04')) / 60, ' minutes');
-select concat('Teaching people to code for ' , (UNIX_TIMESTAMP() - UNIX_TIMESTAMP('2014-02-04')) / 360, ' hours');
+SELECT concat('Teaching people to code for ', (UNIX_TIMESTAMP() - UNIX_TIMESTAMP('2014-02-04')), ' seconds');
+SELECT concat('Teaching people to code for ', (UNIX_TIMESTAMP() - UNIX_TIMESTAMP('2014-02-04')) / 60, ' minutes');
+SELECT concat('Teaching people to code for ', (UNIX_TIMESTAMP() - UNIX_TIMESTAMP('2014-02-04')) / 360, ' hours');
 
 SELECT COUNT(
     DISTINCT first_name)
 FROM employees
 WHERE first_name NOT LIKE '%a%';
 
-show tables;
-describe salaries;
-select * from salaries;
+SHOW TABLES;
+DESCRIBE salaries;
+SELECT *
+FROM salaries;
 
 SELECT (unix_timestamp() - unix_timestamp(hire_date)) / (60 * 60 * 24 * 365)
 FROM employees;
 
-select count(*) from employees where gender = 'M';
-select count(*) from employees where gender = 'F';
+SELECT count(*)
+FROM employees
+WHERE gender = 'M';
+SELECT count(*)
+FROM employees
+WHERE gender = 'F';
 
-SELECT COUNT(first_name), first_name, last_name
+SELECT
+  COUNT(first_name),
+  first_name,
+  last_name
 FROM employees
 WHERE first_name NOT LIKE '%a%'
 GROUP BY first_name, last_name
-order by count(first_name) DESC ;
+ORDER BY count(first_name) DESC;
 
-SELECT COUNT( DISTINCT first_name)
+SELECT COUNT(DISTINCT first_name)
 FROM employees
 WHERE first_name NOT LIKE '%a%';
 
-select DISTINCT first_name from employees WHERE first_name NOT LIKE '%a%';
+SELECT DISTINCT first_name
+FROM employees
+WHERE first_name NOT LIKE '%a%';
 
-select * from employees where first_name = 'Yonghong' and last_name = 'Codenie';
+SELECT *
+FROM employees
+WHERE first_name = 'Yonghong' AND last_name = 'Codenie';
 
-show tables;
+SHOW TABLES;
 
 DESCRIBE salaries;
 
-select * from salaries;
+SELECT *
+FROM salaries;
 
-select AVG(from_date) from salaries ;
+SELECT AVG(from_date)
+FROM salaries;
 
-show tables;
+SHOW TABLES;
 
 
-select concat(
-    (SELECT DATEDIFF(curdate(),'2016-11-08')+1)
-       , ' ', 'Days');
+SELECT concat(
+    (SELECT DATEDIFF(curdate(), '2016-11-08') + 1)
+    , ' ', 'Days');
 
-SELECT DATEDIFF(curdate(),'2016-11-08') as Days;
+SELECT DATEDIFF(curdate(), '2016-11-08') AS Days;
 
 SELECT CONCAT(first_name, ' ', last_name) AS full_name
 FROM employees
 LIMIT 25;
 
 
-select e.emp_no AS 'id from employees' , s.emp_no AS 'Emp_no from salaries'
-from employees AS e, salaries AS s
-where e.first_name
-      like '%qu%' limit 1000;
+SELECT
+  e.emp_no AS 'id from employees',
+  s.emp_no AS 'Emp_no from salaries'
+FROM employees AS e, salaries AS s
+WHERE e.first_name
+      LIKE '%qu%'
+LIMIT 1000;
 
 
-select emp_no AS 'id from employees' , emp_no AS 'Emp_no from salaries'
-from employees AS e, salaries AS s
-where e.first_name
-      like '%qu%';
+SELECT
+  emp_no AS 'id from employees',
+  emp_no AS 'Emp_no from salaries'
+FROM employees AS e, salaries AS s
+WHERE e.first_name
+      LIKE '%qu%';
 
-select employees.*, salaries.*
-from employees, salaries
-where employees.emp_no = 10010 limit 100
+SELECT
+  employees.*,
+  salaries.*
+FROM employees, salaries
+WHERE employees.emp_no = 10010
+LIMIT 100
 
-select count(*) from salaries;
+SELECT count(*)
+FROM salaries;
 
-select employees.emp_no from employees;
+SELECT employees.emp_no
+FROM employees;
 
-describe employees;
-DESCRIBE  salaries;
-
-
-select * from dept_emp where emp_no = '10010';
-select * from dept_manager;
+DESCRIBE employees;
+DESCRIBE salaries;
 
 
-use codeup_test_db;
+SELECT *
+FROM dept_emp
+WHERE emp_no = '10010';
+SELECT *
+FROM dept_manager;
+
+
+USE codeup_test_db;
 
 CREATE TABLE quotes (
-       id INT NOT NULL AUTO_INCREMENT,
-       author VARCHAR(50) NOT NULL,
-       content VARCHAR(240) NOT NULL,
-       PRIMARY KEY (id)
+  id      INT          NOT NULL AUTO_INCREMENT,
+  author  VARCHAR(50)  NOT NULL,
+  content VARCHAR(240) NOT NULL,
+  PRIMARY KEY (id)
 );
 
-show tables;
-use codeup_test_db;
+SHOW TABLES;
+USE codeup_test_db;
 
-describe quotes;
+DESCRIBE quotes;
 
-alter table quotes ADD UNIQUE(content);
+ALTER TABLE quotes
+  ADD UNIQUE (content);
 
 CREATE TABLE authors (
-       id INT NOT NULL AUTO_INCREMENT,
-       first_name VARCHAR(100) NOT NULL,
-       last_name VARCHAR(100) NOT NULL,
-       PRIMARY KEY (id),
-       UNIQUE (first_name, last_name)
+  id         INT          NOT NULL AUTO_INCREMENT,
+  first_name VARCHAR(100) NOT NULL,
+  last_name  VARCHAR(100) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE (first_name, last_name)
 );
 
-describe authors;
+DESCRIBE authors;
 
-describe albums;
+DESCRIBE albums;
 
-ALTER TABLE albums ADD UNIQUE (name, artist);
+ALTER TABLE albums
+  ADD UNIQUE (name, artist);
 
-insert into albums (artist, name, release_date, sales, genre) values ('Fer', 'My Second Album', 2016, 0, 'Folk');
+INSERT INTO albums (artist, name, release_date, sales, genre) VALUES ('Fer', 'My Second Album', 2016, 0, 'Folk');
 
 #how can i get the last inserted record?
 
+USE join_test_db;
+
+SELECT *
+FROM users u
+  JOIN roles r ON u.role_id = r.id
+SELECT *
+FROM users;
+SELECT *
+FROM roles;
+
+DESCRIBE users;
+DESCRIBE roles;
 
 
-
-
-
+SELECT
+  u.name,
+  r.name
+FROM users u
+  JOIN roles r ON r.id = u.role_id;
 
 -- select * from albums order by id desc limit 1;
 
 
+SELECT
+  first_name,
+  last_name,
+  birth_date
+FROM employees
+WHERE emp_no IN (
+  SELECT emp_no
+  FROM dept_manager
+);
+
+SELECT
+  first_name,
+  last_name,
+  birth_date
+FROM employees e
+  JOIN dept_manager dm ON dm.emp_no = e.emp_no;
